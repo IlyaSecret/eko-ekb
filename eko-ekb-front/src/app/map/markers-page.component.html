@@ -1,0 +1,42 @@
+<div class="map-page">
+  <div>
+    <div id="map" #map></div>
+  </div>
+  <div class="list-group-container">
+    <tui-input>
+      Искать по адресу или названию пункта
+    </tui-input>
+    <button
+    tuiButton
+    appearance="green"
+    >Добавить место</button>
+    <div class="markers-page__filters">
+      <p class="filters-title">Что вы хотите сдать?</p>
+      <span class="icon"></span>
+    </div>
+    <div class="list-group">
+      <div *ngFor="let colorMarker of markers; let i = index"
+          (dblclick)="deleteMarker(i)"
+          (click)="flyTo( colorMarker.marker)"
+           class="list-group-item"
+      >
+        <tui-tag
+          *ngFor="let type of colorMarker.type"
+          [value]="type"
+          status="primary"
+          size="l"
+          class="tag"
+        >
+        </tui-tag>
+        <h2>{{colorMarker.title}}</h2>
+        <p>{{colorMarker.address}}</p>
+        <p class="warning">Скоро закрывается</p>
+      </div>
+    </div>
+  </div>
+
+
+<!--  <button (click)="createMarker()"  class="btn btn-primary">-->
+<!--    Добавить маркер-->
+<!--  </button>-->
+</div>
