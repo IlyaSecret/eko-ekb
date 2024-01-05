@@ -1,0 +1,20 @@
+<div class="news-row">
+    <h1>{{title}}</h1>
+    <div class="news-items">
+        <!-- <div class="news-item" *ngFor="let item of news" [routerLink]="['/news', item.id]">
+            <img [attr.src]="item.image"/>
+            <div class="news_desc">
+                <p class="news-item__title">{{item.title}}</p>
+                <p class="news-item__date">{{item.date}}</p>
+            </div>
+        </div> -->
+
+        <div class="news-item" *ngFor="let item of newNews" [routerLink]="'/' + [item.route]">
+            <img [attr.src]="item.img"/>
+            <div class="news_desc">
+                <p class="news-item__title">{{item.title}}</p>
+                <p class="news-item__date">{{item.date}}</p>
+            </div>
+        </div>
+    </div>
+</div>

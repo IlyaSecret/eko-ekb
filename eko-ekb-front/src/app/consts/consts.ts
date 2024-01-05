@@ -1,0 +1,1 @@
+export const api = 'http://51.250.28.250:8080';

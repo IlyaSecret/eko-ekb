@@ -20,6 +20,11 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { NewsPageComponent } from './pages/news-page/news-page.component';
 import { AboutUsPageComponent } from './pages/about-us-page/about-us-page.component';
 import { ForPartnersPageComponent } from './pages/for-partners-page/for-partners-page.component';
+import { PointsService } from './services/points.service';
+import { HttpClientModule } from "@angular/common/http";
+import { NewsItemComponent } from './components/news-item/news-item.component';
+import { NewsItemPageComponent } from './pages/news-item-page/news-item-page.component';
+import { BahiliComponent } from './pages/news/bahili/bahili.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,10 @@ import { ForPartnersPageComponent } from './pages/for-partners-page/for-partners
     MainPageComponent,
     NewsPageComponent,
     AboutUsPageComponent,
-    ForPartnersPageComponent
+    ForPartnersPageComponent,
+    NewsItemComponent,
+    NewsItemPageComponent,
+    BahiliComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +53,12 @@ import { ForPartnersPageComponent } from './pages/for-partners-page/for-partners
     TuiPaginationModule,
     TuiInputModule,
     MarkersPageModule,
-    TuiTabsModule
+    TuiTabsModule,
+    HttpClientModule
   ],
-  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
+  providers: [
+    { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

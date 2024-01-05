@@ -1,12 +1,20 @@
-import {Component, ElementRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { Map, LngLat, Marker } from 'mapbox-gl';
-import {Markers} from "../../shared/mocks/markersMock";
+import { PointsService } from '../services/points.service';
+import { IPoint } from 'src/shared/models/IMarker';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { getPointTypes } from 'src/shared/helpers/getTypes';
+import { mapTimeToString } from '../../shared/helpers/mapTimeToString';
+import { Markers } from '../../shared/mocks/markersMock';
+import { TuiAlertService } from '@taiga-ui/core';
 
 interface MarkerAndColor {
-  marker: Marker;
+  marker: Marker,
+  type: string[],
+  openTime: string,
+  closeTime: string,
   title: string,
-  address: string,
-  type: string[]
+  address: string
 }
 
 interface PlainMarker {
@@ -18,17 +26,59 @@ interface PlainMarker {
   selector: 'app-map',
   templateUrl: './markers-page.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./markers-page.component.less']
+  styleUrls: ['./markers-page.component.less'],
+  providers: [PointsService]
 })
-export class MarkersPageComponent {
+export class MarkersPageComponent implements OnInit{
 
   @ViewChild('map') divMap?: ElementRef;
 
   public markers: MarkerAndColor[] = [];
 
+  readonly addNewPointGroup = new FormGroup({
+    title: new FormControl('', Validators.required),
+    address: new FormControl(null, Validators.required),
+    types: new FormGroup({
+      isPaper: new FormControl(false),
+      isPlactic: new FormControl(false),
+      isMetal: new FormControl(false),
+      isGlass: new FormControl(false),
+      isBattery: new FormControl(false),
+      isLamp: new FormControl(false),
+      isClothes: new FormControl(false),
+      isOther: new FormControl(false),
+    }),
+    workTime: new FormGroup({
+      start: new FormControl(null, Validators.required),
+      end: new FormControl(null, Validators.required),
+    })
+  })
+
+  allTypesObj = {
+    isPaper: false,
+    isPlastic: false,
+    isMetal: false,
+    isGlass: false,
+    isBattery: false,
+    isLamp: false,
+    isClothes: false,
+    isOther: false,
+
+  }
+
+  currentMarker: number[] | null = null;
+
 
   public map?: Map;
   public currentLngLat: LngLat = new LngLat(60.594528, 56.837650);
+
+  points!: IPoint[];
+
+  isAddNewPoint: boolean = false;
+
+  allTypes: string[];
+
+  constructor(private readonly pointsService: PointsService, @Inject(TuiAlertService) private readonly alerts: TuiAlertService) {}
 
 
   ngAfterViewInit(): void {
@@ -42,44 +92,90 @@ export class MarkersPageComponent {
       zoom: 13,
     });
 
-    this.readFromLocalStorage();
-
     const markerHtml = document.createElement('div');
     markerHtml.innerHTML = ' '
+  }
 
-    const marker = new Marker({
-      color: 'red',
-      element: markerHtml,
-      draggable: false
-    })
-      .setLngLat( this.currentLngLat )
-      .addTo( this.map );
+  ngOnInit(): void {
+    this.pointsService.getAllPoints().subscribe(points => {
+      this.points = points;
+      this.readFromLocalStorage();
+      this.allTypes = this.getAllAvailableTypes();
+
+      if (this.allTypes.includes('Бумага')) {
+        this.allTypesObj.isPaper = true;
+      }
+      if (this.allTypes.includes('Батарейки')) {
+        this.allTypesObj.isBattery = true;
+      }
+      if (this.allTypes.includes('Одежда')) {
+        this.allTypesObj.isClothes = true;
+      }
+      if (this.allTypes.includes('Пластик')) {
+        this.allTypesObj.isPlastic = true;
+      }
+      if (this.allTypes.includes('Металл')) {
+        this.allTypesObj.isMetal = true;
+      }
+      if (this.allTypes.includes('Стекло')) {
+        this.allTypesObj.isGlass = true;
+      }
+      if (this.allTypes.includes('Лампочки')) {
+        this.allTypesObj.isLamp = true;
+      }
+      if (this.allTypes.includes('Другое')) {
+        this.allTypesObj.isOther = true;
+      }
+    });
+
 
   }
 
-  // createMarker() {
-  //   if ( !this.map ) return;
-  //
-  //   const color = '#xxxxxx'.replace(/x/g, y=>(Math.random()*16|0).toString(16));
-  //   const lngLat = this.map.getCenter();
-  //
-  //   this.addMarker( lngLat );
-  // }
+  createMarker() {
+    if ( !this.map ) return;
+  
+    const lngLat = this.map.getCenter();
+
+    const { title, address, workTime } = this.addNewPointGroup.value;
+    const typesMap = getPointTypes(this.addNewPointGroup.controls.types);
+    // @ts-ignore
+    this.addMarker(lngLat, typesMap, title, address, workTime?.start, workTime?.end);
+    
+  }
+
+  getAllAvailableTypes(): string[] {
+    let types = [];
+    this.markers.forEach(marker => {
+      types = types.concat(marker.type)
+    })
+    const typesSet = new Set(types);
+    return [...typesSet];
+  }
 
 
-  addMarker( lngLat: LngLat, type: string[], title: string, address: string ) {
+
+  addMarker( lngLat: LngLat, type: string[], title: string, address: string, openTime: string, closeTime: string, ) {
     if ( !this.map ) return;
 
     const marker = new Marker({
-      draggable: false
+      draggable: true
     })
       .setLngLat( lngLat )
       .addTo( this.map );
 
-    this.markers.push({ marker, type, title, address });
-    this.saveToLocalStorage();
+    this.markers.push({ marker, type, title, address, openTime, closeTime });
 
     marker.on('dragend', () => this.saveToLocalStorage() );
+  }
+
+  onAddPoint(): void {
+    this.isAddNewPoint = !this.isAddNewPoint;
+    if (this.isAddNewPoint) {
+      this.createMarker();
+    }
+    else {
+      this.deleteMarker(this.markers.length - 1)
+    }    
   }
 
   deleteMarker( index: number ) {
@@ -98,26 +194,61 @@ export class MarkersPageComponent {
 
 
   saveToLocalStorage() {
-    const plainMarkers: PlainMarker[] = this.markers.map( ({ marker }) => {
+    const plainMarkers: PlainMarker[] = this.markers.map(({ marker }) => {
+      marker.setDraggable(false);
       return {
         lngLat: marker.getLngLat().toArray()
       }
     });
 
     localStorage.setItem('plainMarkers', JSON.stringify( plainMarkers ));
-
   }
 
   readFromLocalStorage() {
-    const plainMarkersString = localStorage.getItem('plainMarkers') ?? '[]';
-
-    Markers.forEach( ({ lngLat , type, title, address}) => {
-      const [ lng, lat ] = lngLat;
+    this.points.forEach( ({ ingLat , type, title, address, openTime, closeTime}) => {
+      const lng = ingLat.cord1;
+      const lat = ingLat.cord2;
       const coords = new LngLat( lng, lat );
 
-      this.addMarker( coords,  type, title, address);
+      this.addMarker( coords, type, title, address, openTime, closeTime);
     })
 
+  }
+
+  some() {
+    console.log(this.markers[this.markers.length - 1].marker.getLngLat());
+  }
+
+
+  sendNewPoint(): void {
+
+    const lngLat = this.markers[this.markers.length - 1].marker.getLngLat()
+    const { title, address, workTime } = this.addNewPointGroup.value;
+    const typesMap = getPointTypes(this.addNewPointGroup.controls.types);
+    this.pointsService.createPoint({
+      ingLat: {
+        cord1: lngLat.lng,
+        cord2: lngLat.lat
+      },
+      address,
+      closeTime: mapTimeToString(workTime?.end),
+      openTime: mapTimeToString(workTime?.start),
+      title,
+      type: typesMap
+    }).subscribe((_) => {
+      this.alerts
+        .open('<strong>Точка успешно добавлена</strong>', {
+          status: 'success',
+        })
+        .subscribe();
+      
+      this.isAddNewPoint = false;
+      this.pointsService.getAllPoints().subscribe(points => {
+        this.points = points;
+      });
+      this.saveToLocalStorage();
+      this.readFromLocalStorage();
+    });
   }
 
 
