@@ -25,6 +25,10 @@ import { HttpClientModule } from "@angular/common/http";
 import { NewsItemComponent } from './components/news-item/news-item.component';
 import { NewsItemPageComponent } from './pages/news-item-page/news-item-page.component';
 import { BahiliComponent } from './pages/news/bahili/bahili.component';
+import { FallenListyaComponent } from './pages/news/fallen-listya/fallen-listya.component';
+import { ZasuhaComponent } from './pages/news/zasuha/zasuha.component';
+import { FireworksComponent } from './pages/news/fireworks/fireworks.component';
+import { GiftsComponent } from './pages/news/gifts/gifts.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,11 @@ import { BahiliComponent } from './pages/news/bahili/bahili.component';
     ForPartnersPageComponent,
     NewsItemComponent,
     NewsItemPageComponent,
-    BahiliComponent
+    BahiliComponent,
+    FallenListyaComponent,
+    ZasuhaComponent,
+    FireworksComponent,
+    GiftsComponent
   ],
   imports: [
     BrowserModule,

@@ -62,9 +62,9 @@
       </div>
     </div>
     <div class="list-group">
-      <div *ngFor="let colorMarker of markers; let i = index"
+      <div *ngFor="let colorMarker of points; let i = index"
           (dblclick)="deleteMarker(i)"
-          (click)="flyTo( colorMarker.marker)"
+          (click)="flyTo( colorMarker.ingLat)"
            class="list-group-item"
       >
         <tui-tag
@@ -120,9 +120,4 @@
       <button tuiButton appearance="green" (click)="sendNewPoint()">Добавить</button>
     </div>
   </form>
-
-
-<!--  <button (click)="createMarker()"  class="btn btn-primary">-->
-<!--    Добавить маркер-->
-<!--  </button>-->
 </div>

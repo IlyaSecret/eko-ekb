@@ -5,7 +5,6 @@ import { IPoint } from 'src/shared/models/IMarker';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { getPointTypes } from 'src/shared/helpers/getTypes';
 import { mapTimeToString } from '../../shared/helpers/mapTimeToString';
-import { Markers } from '../../shared/mocks/markersMock';
 import { TuiAlertService } from '@taiga-ui/core';
 
 interface MarkerAndColor {
@@ -183,11 +182,11 @@ export class MarkersPageComponent implements OnInit{
     this.markers.splice( index, 1 );
   }
 
-  flyTo( marker: Marker ) {
+  flyTo( markerCords: {cord1: number, cord2: number} ) {
 
     this.map?.flyTo({
       zoom: 14,
-      center: marker.getLngLat()
+      center: [markerCords.cord1, markerCords.cord2]
     });
 
   }

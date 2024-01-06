@@ -20,7 +20,35 @@ export class NewsItemComponent implements OnInit{
           img: 'assets/news/bahili.jpg',
           date: '14.11.2023',
           route: 'bahili'
-        }
+        },
+        {
+          id: 2,
+          title: 'Нужно ли убирать опавшие листья?',
+          img: 'assets/news/listya.jpeg',
+          date: '14.11.2023',
+          route: 'fallen-listya'
+        },
+        {
+          id: 3,
+          title: 'Жара, засуха, наводнения',
+          img: 'assets/news/zasuha.jpg',
+          date: '16.11.2023',
+          route: 'zasuha'
+        },
+        {
+          id: 4,
+          title: 'Как фейерверки загрязняют природу?',
+          img: 'assets/news/firework.jpg',
+          date: '20.11.2023',
+          route: 'fireworks'
+        },
+        {
+          id: 5,
+          title: 'Как экологично упаковать подарки?',
+          img: 'assets/news/podarok.jpg',
+          date: '01.12.2023',
+          route: 'gifts'
+        },
       ]
   }
 }
