@@ -1,11 +1,12 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import { Map, LngLat, Marker } from 'mapbox-gl';
+import { Map, LngLat, Marker, Popup } from 'mapbox-gl';
 import { PointsService } from '../services/points.service';
 import { IPoint } from 'src/shared/models/IMarker';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { getPointTypes } from 'src/shared/helpers/getTypes';
 import { mapTimeToString } from '../../shared/helpers/mapTimeToString';
 import { TuiAlertService } from '@taiga-ui/core';
+import { BehaviorSubject } from 'rxjs';
 
 interface MarkerAndColor {
   marker: Marker,
@@ -33,6 +34,8 @@ export class MarkersPageComponent implements OnInit{
   @ViewChild('map') divMap?: ElementRef;
 
   public markers: MarkerAndColor[] = [];
+
+  public searchTerm = new FormControl('');
 
   readonly addNewPointGroup = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -65,6 +68,12 @@ export class MarkersPageComponent implements OnInit{
 
   }
 
+  selectedMarker: IPoint | null = null;
+  infoLeft: number = 0;
+  infoTop: number = 0;
+
+  selectedTypes: Set<string> = new Set<string>();
+
   currentMarker: number[] | null = null;
 
 
@@ -95,11 +104,55 @@ export class MarkersPageComponent implements OnInit{
     markerHtml.innerHTML = ' '
   }
 
+  toggleTypeFilter(type: string): void {
+    console.log(this.selectedTypes)
+    if (this.selectedTypes.has(type)) {
+      this.selectedTypes.delete(type)
+      this.filterPoints()
+    }
+    else {
+      this.selectedTypes.add(type);
+      this.filterPoints()
+    }
+  }
+
+  filterPoints(): void {
+
+    if (this.searchTerm.value) {
+      this.points = this.points.filter(point =>
+        point.title.toLowerCase().includes(this.searchTerm.value.toLowerCase()) ||
+        point.address.toLowerCase().includes(this.searchTerm.value.toLowerCase())
+      );
+    }
+    else if (this.selectedTypes.size > 0) {
+      this.pointsService.getAllPoints().subscribe(points => {
+        this.points = points.filter(point =>
+          point.type.some(type => this.selectedTypes.has(type))
+        );
+      });
+    }
+    else {
+      this.pointsService.getAllPoints().subscribe(points => {
+        this.points = points;
+      });
+    }
+  }
+
+  isTypeInFilters(type: string): boolean {
+    return this.selectedTypes.has(type);
+  }
+
   ngOnInit(): void {
     this.pointsService.getAllPoints().subscribe(points => {
       this.points = points;
       this.readFromLocalStorage();
       this.allTypes = this.getAllAvailableTypes();
+
+      this.filterPoints();
+
+      this.searchTerm.valueChanges.subscribe((value: string) => {
+        this.filterPoints();
+      });
 
       if (this.allTypes.includes('Бумага')) {
         this.allTypesObj.isPaper = true;
@@ -127,7 +180,7 @@ export class MarkersPageComponent implements OnInit{
       }
     });
 
-
+    
   }
 
   createMarker() {
@@ -153,18 +206,18 @@ export class MarkersPageComponent implements OnInit{
 
 
 
-  addMarker( lngLat: LngLat, type: string[], title: string, address: string, openTime: string, closeTime: string, ) {
-    if ( !this.map ) return;
-
+  addMarker(lngLat: LngLat, type: string[], title: string, address: string, openTime: string, closeTime: string) {
+    if (!this.map) return;
+  
     const marker = new Marker({
       draggable: true
     })
-      .setLngLat( lngLat )
-      .addTo( this.map );
-
+      .setLngLat(lngLat)
+      .addTo(this.map);
+  
     this.markers.push({ marker, type, title, address, openTime, closeTime });
-
-    marker.on('dragend', () => this.saveToLocalStorage() );
+  
+    marker.on('dragend', () => this.saveToLocalStorage());
   }
 
   onAddPoint(): void {
@@ -182,13 +235,14 @@ export class MarkersPageComponent implements OnInit{
     this.markers.splice( index, 1 );
   }
 
-  flyTo( markerCords: {cord1: number, cord2: number} ) {
+  flyTo( markerCords: {cord1: number, cord2: number}, address: string ) {
 
     this.map?.flyTo({
       zoom: 14,
       center: [markerCords.cord1, markerCords.cord2]
     });
 
+    const currentMark = this.markers.filter(marker => marker.address === address);
   }
 
 

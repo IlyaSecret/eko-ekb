@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 .mapboxgl-marker {
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background-color: #8AC44B;
+  background-color:  white;
   left:0;
   opacity:1;
   position:absolute;
@@ -11,9 +11,11 @@
   will-change:transform;
   transition:opacity 0.2s;
   &:hover {
-    background-color: #A8E269;
+    background-color: #8AC44B;
+    transition: 0.1s all;
   }
   svg {
     display: none;
   }
+  border: 6px solid #8AC44B;
 }

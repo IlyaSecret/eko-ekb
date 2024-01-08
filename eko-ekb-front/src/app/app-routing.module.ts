@@ -10,7 +10,19 @@ import { FallenListyaComponent } from './pages/news/fallen-listya/fallen-listya.
 import { ZasuhaComponent } from './pages/news/zasuha/zasuha.component';
 import { FireworksComponent } from './pages/news/fireworks/fireworks.component';
 import { GiftsComponent } from './pages/news/gifts/gifts.component';
+import { TemperatureComponent } from './pages/news/temperature/temperature.component';
+import { DokladComponent } from './pages/news/doklad/doklad.component';
+import { ResultsComponent } from './pages/news/results/results.component';
+import { KoroedComponent } from './pages/news/koroed/koroed.component';
+import { Cop28Component } from './pages/news/cop28/cop28.component';
+import { HellComponent } from './pages/news/hell/hell.component';
+import { DermoComponent } from './pages/news/dermo/dermo.component';
+import { BurnKabanComponent } from './pages/news/burn-kaban/burn-kaban.component';
+import { EkbBeachComponent } from './pages/news/ekb-beach/ekb-beach.component';
+import { ButterfliesComponent } from './pages/news/butterflies/butterflies.component';
 
+
+// BOBA ЗДЕСЬ ДОБАВИТЬ РОУТЫ НА НОВОСТИ (ТО ЧТО В ОБЪЕКТЕ ПОД НАЗВАНИЕМ route)
 const routes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'news', component: NewsPageComponent},
@@ -21,7 +33,18 @@ const routes: Routes = [
   { path: 'fallen-listya', component: FallenListyaComponent},
   { path: 'zasuha', component: ZasuhaComponent},
   { path: 'fireworks', component: FireworksComponent},
-  {path: 'gifts', component: GiftsComponent},
+  { path: 'gifts', component: GiftsComponent },
+  { path: 'temperature', component: TemperatureComponent },
+  { path: 'doklad', component: DokladComponent },
+  { path: 'results', component: ResultsComponent },
+  { path: 'koroed', component: KoroedComponent },
+  { path: 'cop28', component: Cop28Component },
+  { path: 'hell', component: HellComponent },
+  { path: 'dermo', component: DermoComponent },
+  { path: 'burn-kaban', component: BurnKabanComponent },
+  { path: 'ekb-beach', component: EkbBeachComponent },
+  { path: 'butterflies', component: ButterfliesComponent}
+  
 ];
 
 @NgModule({

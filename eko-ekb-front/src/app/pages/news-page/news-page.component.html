@@ -1,3 +1,3 @@
 <div class="news-page">
-    <app-news-item></app-news-item>
+    <app-news-item *ngFor="let item of newNews" [news]="item"></app-news-item>
 </div>
