@@ -39,6 +39,7 @@ import { DermoComponent } from './pages/news/dermo/dermo.component';
 import { BurnKabanComponent } from './pages/news/burn-kaban/burn-kaban.component';
 import { EkbBeachComponent } from './pages/news/ekb-beach/ekb-beach.component';
 import { ButterfliesComponent } from './pages/news/butterflies/butterflies.component';
+import { BackButtonComponent } from './components/back-button/back-button.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ButterfliesComponent } from './pages/news/butterflies/butterflies.compo
     DermoComponent,
     BurnKabanComponent,
     EkbBeachComponent,
-    ButterfliesComponent
+    ButterfliesComponent,
+    BackButtonComponent
   ],
   imports: [
     BrowserModule,
