@@ -1,21 +1,100 @@
 <div class="partners">
-  <div class="partners-left">
-    <div class="partners-left__text">
-      <h1>Мы&nbsp;всегда рады новым друзьям!</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  <div class="upper">
+    <div class="partners-left">
+      <div class="partners-left__text">
+        <h1>Мы&nbsp;всегда рады новым друзьям!</h1>
+        <h2>Дорогие партнеры в сфере устойчивости и экологии!</h2>
+        <p>Мы приветствуем вас на страницах нашего сайта, посвященного переработке мусора. Наша компания сосредоточена на эффективной переработке отходов и внедрении инновационных решений для уменьшения экологического воздействия. Мы приглашаем вас к сотрудничеству, чтобы вместе создать более чистое и зеленое будущее. Если ваша компания разделяет наше стремление к устойчивости, будем рады рассмотреть различные формы партнерства.</p>
+        <p>Не стесняйтесь связаться с нами для обсуждения потенциальных возможностей и воплощения идей в жизнь. Вместе мы сможем разработать и внедрить экологически эффективные решения, способствующие устойчивому развитию. Совместные усилия могут привести к значимым изменениям в области переработки мусора, и мы готовы к сотрудничеству для достижения общих целей.</p>
+        <p>Пожалуйста заполните информацию о своей компании ниже. Это поможет нам узнать лучше о Вашей организации и рассмотреть дальнейшее сотрудничество.</p>
+      </div>
+      <div class="partners-left__buttons">
+        <button
+          tuiButton
+          appearance="green"
+          (click)="onClick(content, header, 'm')"
+        >Стать партнером</button>
+      </div>
     </div>
-    <div class="partners-left__buttons">
-      <button
-        tuiButton
-        appearance="green"
-      >Стать партнером</button>
-      <button
-        tuiButton
-        appearance="additional"
-      >Я уже партнер</button>
+    <div class="partners-right">
+      <img src="assets/image.png" class="partners-image"/>
     </div>
   </div>
-  <div class="partners-right">
-    <img src="assets/man.png" class="partners-image"/>
+  <div class="islands">
+    <h1>Почему с нами нужно сотрудничать?</h1>
+    <div class="islands-items">
+      <tui-island
+        class="island-item"
+        tuiIsland
+      >
+        <h3 class="tui-island__title">Эффективность логистики</h3>
+        <p class="tui-island__paragraph">
+          Наша интерактивная карта с точками переработки значительно упрощает планирование и оптимизацию логистики. Это позволяет оптимизировать маршруты и снижать затраты на транспорт, что является ключевым элементом для эффективной работы вашего бизнеса.
+        </p>
+      </tui-island>
+      <tui-island class="island-item">
+        <h3 class="tui-island__title">Расширение клиентской базы</h3>
+        <p class="tui-island__paragraph">
+          Работая с нами, вы взаимодействуете с компанией, постоянно внедряющей инновационные технологии в области переработки мусора. Это не только повышает эффективность вашей деятельности, но и подчеркивает вашу компанию как технологически продвинутого партнера.
+        </p>
+      </tui-island>
+      <tui-island class="island-item">
+        <h3 class="tui-island__title">Бизнес-сообщество</h3>
+        <p class="tui-island__paragraph">
+          Наш сервис предоставляет доступ к актуальным новостям и событиям в отрасли. Ваш бизнес будет всегда в курсе последних тенденций, что поможет вам принимать обоснованные решения и оперативно реагировать на изменения в среде.
+        </p>
+      </tui-island>
+      <tui-island class="island-item">
+        <h3 class="tui-island__title">Мобильное приложение</h3>
+        <p class="tui-island__paragraph">
+          Наше существующее мобильное приложение предоставляет партнерам уникальное преимущество - возможность использовать карту в режиме реального времени в дороге. Это обеспечивает максимальную мобильность и удобство в поиске точек сдачи мусора прямо в пути.
+        </p>
+      </tui-island>
+      <tui-island class="island-item">
+        <h3 class="tui-island__title">Расширенное отслеживание</h3>
+        <p class="tui-island__paragraph">
+          Мы предложим расширенные инструменты отслеживания и аналитики для наших партнеров, чтобы они могли более эффективно анализировать свою деятельность и принимать обоснованные решения для роста бизнеса.        </p>
+      </tui-island>
+      <tui-island class="island-item">
+        <h3 class="tui-island__title">Эффективность логистики</h3>
+        <p class="tui-island__paragraph">
+          Наша интерактивная карта с точками переработки значительно упрощает планирование и оптимизацию логистики. Это позволяет оптимизировать маршруты и снижать затраты на транспорт, что является ключевым элементом для эффективной работы вашего бизнеса.
+        </p>
+      </tui-island>
+    </div>
   </div>
 </div>
+
+<ng-template
+  #content
+  let-observer
+>
+  <div class="dialog" formGroupName="partnersForm">
+    <tui-input formControlName="phoneNumber">
+      Номер телефона или почта
+    </tui-input>
+    <tui-input formControlName="companyName">
+      Название компании
+    </tui-input>
+    <tui-textarea
+      formControlName="comment"
+    tuiHintContent="Например, расскажите чем занимается ваша компания, и чем вы хотите помочь экологии"
+    class="textfield"
+    >
+      Комментарий
+    </tui-textarea>
+    <tui-error [error]="[] | tuiFieldError | async" formControlName="comment"></tui-error>
+    <button
+    tuiButton
+    appearance="green"
+    (click)="toggleNotification()"
+    (click)="observer.complete()"
+    >Отправить</button>
+  </div>
+</ng-template>
+
+<ng-template #header>
+  <div class="header">
+    <p class="logo">GreenLink</p>
+  </div>
+</ng-template>

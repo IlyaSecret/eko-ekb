@@ -1,5 +1,12 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
-import {TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER, TuiButtonModule} from "@taiga-ui/core";
+import {
+  TuiRootModule,
+  TuiDialogModule,
+  TuiAlertModule,
+  TUI_SANITIZER,
+  TuiButtonModule,
+  TuiHintModule, TuiErrorModule
+} from "@taiga-ui/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,11 +14,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
-  TuiCarouselModule,
+  TuiCarouselModule, TuiFieldErrorPipeModule,
   TuiInputModule,
   TuiInputSliderModule,
   TuiIslandModule,
-  TuiPaginationModule, TuiTabsModule
+  TuiPaginationModule, TuiTabsModule, TuiTextareaModule, TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
 import {MarkersPageModule} from "./map/markers-page.module";
@@ -84,7 +91,12 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     TuiInputModule,
     MarkersPageModule,
     TuiTabsModule,
-    HttpClientModule
+    HttpClientModule,
+    TuiTextAreaModule,
+    TuiTextareaModule,
+    TuiHintModule,
+    TuiErrorModule,
+    TuiFieldErrorPipeModule
   ],
   providers: [
     { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },

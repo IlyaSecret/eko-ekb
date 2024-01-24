@@ -5,7 +5,7 @@ import { IPoint } from 'src/shared/models/IMarker';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { getPointTypes } from 'src/shared/helpers/getTypes';
 import { mapTimeToString } from '../../shared/helpers/mapTimeToString';
-import { TuiAlertService } from '@taiga-ui/core';
+import {TUI_TEXTFIELD_APPEARANCE_DIRECTIVE, TuiAlertService} from '@taiga-ui/core';
 import { BehaviorSubject } from 'rxjs';
 
 interface MarkerAndColor {
@@ -28,6 +28,7 @@ interface PlainMarker {
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./markers-page.component.less'],
   providers: [PointsService]
+
 })
 export class MarkersPageComponent implements OnInit{
 
@@ -180,19 +181,19 @@ export class MarkersPageComponent implements OnInit{
       }
     });
 
-    
+
   }
 
   createMarker() {
     if ( !this.map ) return;
-  
+
     const lngLat = this.map.getCenter();
 
     const { title, address, workTime } = this.addNewPointGroup.value;
     const typesMap = getPointTypes(this.addNewPointGroup.controls.types);
     // @ts-ignore
     this.addMarker(lngLat, typesMap, title, address, workTime?.start, workTime?.end);
-    
+
   }
 
   getAllAvailableTypes(): string[] {
@@ -208,15 +209,15 @@ export class MarkersPageComponent implements OnInit{
 
   addMarker(lngLat: LngLat, type: string[], title: string, address: string, openTime: string, closeTime: string) {
     if (!this.map) return;
-  
+
     const marker = new Marker({
       draggable: true
     })
       .setLngLat(lngLat)
       .addTo(this.map);
-  
+
     this.markers.push({ marker, type, title, address, openTime, closeTime });
-  
+
     marker.on('dragend', () => this.saveToLocalStorage());
   }
 
@@ -227,7 +228,7 @@ export class MarkersPageComponent implements OnInit{
     }
     else {
       this.deleteMarker(this.markers.length - 1)
-    }    
+    }
   }
 
   deleteMarker( index: number ) {
@@ -294,7 +295,7 @@ export class MarkersPageComponent implements OnInit{
           status: 'success',
         })
         .subscribe();
-      
+
       this.isAddNewPoint = false;
       this.pointsService.getAllPoints().subscribe(points => {
         this.points = points;
