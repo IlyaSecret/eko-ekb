@@ -38,6 +38,10 @@ export class MarkersPageComponent implements OnInit{
 
   public searchTerm = new FormControl('');
 
+  get isAuth(): string {
+    return localStorage.getItem('isAuth')
+  }
+
   readonly addNewPointGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     address: new FormControl(null, Validators.required),

@@ -14,11 +14,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
-  TuiCarouselModule, TuiFieldErrorPipeModule,
-  TuiInputModule,
-  TuiInputSliderModule,
-  TuiIslandModule,
-  TuiPaginationModule, TuiTabsModule, TuiTextareaModule, TuiTextAreaModule
+    TuiCarouselModule, TuiFieldErrorPipeModule,
+    TuiInputModule, TuiInputPasswordModule,
+    TuiInputSliderModule,
+    TuiIslandModule,
+    TuiPaginationModule, TuiTabsModule, TuiTextareaModule, TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
 import {MarkersPageModule} from "./map/markers-page.module";
@@ -47,6 +47,8 @@ import { BurnKabanComponent } from './pages/news/burn-kaban/burn-kaban.component
 import { EkbBeachComponent } from './pages/news/ekb-beach/ekb-beach.component';
 import { ButterfliesComponent } from './pages/news/butterflies/butterflies.component';
 import { BackButtonComponent } from './components/back-button/back-button.component';
+import { AuthComponent } from './pages/auth/auth.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -73,7 +75,8 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     BurnKabanComponent,
     EkbBeachComponent,
     ButterfliesComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +99,9 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     TuiTextareaModule,
     TuiHintModule,
     TuiErrorModule,
-    TuiFieldErrorPipeModule
+    TuiFieldErrorPipeModule,
+    TuiInputPasswordModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },

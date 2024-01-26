@@ -20,6 +20,7 @@ import { DermoComponent } from './pages/news/dermo/dermo.component';
 import { BurnKabanComponent } from './pages/news/burn-kaban/burn-kaban.component';
 import { EkbBeachComponent } from './pages/news/ekb-beach/ekb-beach.component';
 import { ButterfliesComponent } from './pages/news/butterflies/butterflies.component';
+import {AuthComponent} from "./pages/auth/auth.component";
 
 
 // BOBA ЗДЕСЬ ДОБАВИТЬ РОУТЫ НА НОВОСТИ (ТО ЧТО В ОБЪЕКТЕ ПОД НАЗВАНИЕМ route)
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'news', component: NewsPageComponent},
   {path: 'news/:id', component: NewsItemPageComponent},
+  {path: 'auth', component: AuthComponent},
   {path: 'about-us', component: AboutUsPageComponent},
   { path: 'partners', component: ForPartnersPageComponent },
   { path: 'bahili', component: BahiliComponent },
@@ -44,7 +46,7 @@ const routes: Routes = [
   { path: 'burn-kaban', component: BurnKabanComponent },
   { path: 'ekb-beach', component: EkbBeachComponent },
   { path: 'butterflies', component: ButterfliesComponent}
-  
+
 ];
 
 @NgModule({

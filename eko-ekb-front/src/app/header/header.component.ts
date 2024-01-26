@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent {
-
+  get isAuth(): boolean {
+    return localStorage.getItem('isAuth') === 'true'
+  }
 }
