@@ -20,5 +20,11 @@
         tuiTab
         routerLink="/partners"
       >Партнерам</button>
+      <button
+        class="auth"
+        routerLink="/auth"
+        *ngIf="!isAuth"
+      >Авторизация</button>
     </nav>
+
 </div>

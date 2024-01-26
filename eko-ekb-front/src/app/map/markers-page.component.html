@@ -10,6 +10,7 @@
     tuiButton
     appearance="green"
     (click)="onAddPoint()"
+    *ngIf="isAuth === 'true'"
     >Добавить место</button>
     <div class="markers-page__filters">
       <p class="filters-title">Что вы хотите сдать?</p>
