@@ -48,6 +48,8 @@ import { BurnKabanComponent } from './pages/news/burn-kaban/burn-kaban.component
 import { EkbBeachComponent } from './pages/news/ekb-beach/ekb-beach.component';
 import { ButterfliesComponent } from './pages/news/butterflies/butterflies.component';
 import { BackButtonComponent } from './components/back-button/back-button.component';
+import { AuthComponent } from './pages/auth/auth.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -74,7 +76,8 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     BurnKabanComponent,
     EkbBeachComponent,
     ButterfliesComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +101,9 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     TuiActionModule,
     TuiHintModule,
     TuiErrorModule,
-    TuiFieldErrorPipeModule
+    TuiFieldErrorPipeModule,
+    TuiInputPasswordModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
