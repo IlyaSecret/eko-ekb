@@ -14,11 +14,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
-    TuiCarouselModule, TuiFieldErrorPipeModule,
-    TuiInputModule, TuiInputPasswordModule,
-    TuiInputSliderModule,
-    TuiIslandModule,
-    TuiPaginationModule, TuiTabsModule, TuiTextareaModule, TuiTextAreaModule
+  TuiCarouselModule, TuiFieldErrorPipeModule,
+  TuiInputModule,
+  TuiInputSliderModule,
+  TuiIslandModule,
+  TuiActionModule,
+  TuiPaginationModule, TuiTabsModule, TuiTextareaModule, TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
 import {MarkersPageModule} from "./map/markers-page.module";
@@ -97,6 +98,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     HttpClientModule,
     TuiTextAreaModule,
     TuiTextareaModule,
+    TuiActionModule,
     TuiHintModule,
     TuiErrorModule,
     TuiFieldErrorPipeModule,
