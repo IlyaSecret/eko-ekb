@@ -18,6 +18,7 @@ import {
   TuiInputModule,
   TuiInputSliderModule,
   TuiIslandModule,
+  TuiActionModule,
   TuiPaginationModule, TuiTabsModule, TuiTextareaModule, TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
@@ -94,6 +95,7 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     HttpClientModule,
     TuiTextAreaModule,
     TuiTextareaModule,
+    TuiActionModule,
     TuiHintModule,
     TuiErrorModule,
     TuiFieldErrorPipeModule
