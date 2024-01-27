@@ -10,6 +10,8 @@ import {
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {JWT_OPTIONS, JwtModule} from "@auth0/angular-jwt";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +21,7 @@ import {
   TuiInputSliderModule,
   TuiIslandModule,
   TuiActionModule,
+  TuiInputPasswordModule,
   TuiPaginationModule, TuiTabsModule, TuiTextareaModule, TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
@@ -47,9 +50,26 @@ import { DermoComponent } from './pages/news/dermo/dermo.component';
 import { BurnKabanComponent } from './pages/news/burn-kaban/burn-kaban.component';
 import { EkbBeachComponent } from './pages/news/ekb-beach/ekb-beach.component';
 import { ButterfliesComponent } from './pages/news/butterflies/butterflies.component';
-import { BackButtonComponent } from './components/back-button/back-button.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { BackButtonComponent } from './components/back-button/back-button.component';
+import { AuthSerivce } from "./pages/auth/auth.service";
+import { AuthInterceptor } from "./auth-interceptor";
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
+
+export function getAuthScheme() {
+  return "Bearer ";
+}
+
+export function jwtOptionsFactory() {
+  return {
+    tokenGetter,
+    authScheme: getAuthScheme,
+  }
+}
 
 @NgModule({
   declarations: [
@@ -103,10 +123,24 @@ import {ReactiveFormsModule} from "@angular/forms";
     TuiErrorModule,
     TuiFieldErrorPipeModule,
     TuiInputPasswordModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory:jwtOptionsFactory,
+      },
+      config: {
+        throwNoTokenError: true,
+        headerName:"Authorization",
+        tokenGetter: tokenGetter,
+        allowedDomains:["http://51.250.28.250:8080"]
+      },
+    }),
   ],
   providers: [
     { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
+    AuthSerivce,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

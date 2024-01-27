@@ -1,11 +1,13 @@
 <div class="auth" [formGroup]="form">
   <tui-island class="auth-block">
-    <h1>Авторизация</h1>
-    <tui-input formControlName="username">Логин</tui-input>
-    <tui-input-password formControlName="password">Пароль</tui-input-password>
+    <h1>Войти в аккаунт</h1>
+    <div class="inputs-auth">
+      <tui-input formControlName="username">Логин</tui-input>
+      <tui-input-password formControlName="password">Пароль</tui-input-password>
+    </div>
     <button (click)="submit()"
       tuiButton
-    >Авторизироваться</button>
+    >Войти</button>
 
   </tui-island>
 
