@@ -25,6 +25,9 @@
         routerLink="/auth"
         *ngIf="!isAuth"
       >Авторизация</button>
+      <p *ngIf="isAuth" class="auth_true">
+        user
+      </p>
     </nav>
 
 </div>
